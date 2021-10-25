@@ -1,3 +1,5 @@
 import { app } from './firebaseApp'
+import { getFirestore } from 'firebase/firestore/lite'
 
-console.log(app)
+const db = getFirestore(app)
+console.log(db)
