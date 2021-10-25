@@ -1,1 +1,3 @@
-console.log('Webpack works')
+import { app } from './firebaseApp'
+
+console.log(app)
