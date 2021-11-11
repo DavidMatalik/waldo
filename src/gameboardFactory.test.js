@@ -16,9 +16,6 @@ test('getCharacters should return an array with expected object', () => {
 })
 
 test('comparePositions should return true, if positions are equal', () => {
-  const userPosition = { x: 100, y: 100 }
-  const characterId = '123'
-
   const fakeLoadCharacterPosition = jest.fn()
   fakeLoadCharacterPosition.mockReturnValue(Promise.resolve({ x: 100, y: 100 }))
 
@@ -28,9 +25,52 @@ test('comparePositions should return true, if positions are equal', () => {
     characterFactory
   )
 
+  const userPosition = { x: 100, y: 100 }
+  const characterId = '123'
+
   gameboard
     .comparePositions(userPosition, characterId)
     .then((comparePositions) => {
       expect(comparePositions).toBe(true)
+    })
+})
+
+test('comparePositions should return true, if positions are nearly equal', () => {
+  const fakeLoadCharacterPosition = jest.fn()
+  fakeLoadCharacterPosition.mockReturnValue(Promise.resolve({ x: 100, y: 100 }))
+
+  const gameboard = gameboardFactory(
+    null,
+    fakeLoadCharacterPosition,
+    characterFactory
+  )
+
+  const userPosition = { x: 110, y: 100 }
+  const characterId = '123'
+
+  gameboard
+    .comparePositions(userPosition, characterId)
+    .then((comparePositions) => {
+      expect(comparePositions).toBe(true)
+    })
+})
+
+test('comparePositions should return false, if positions are too far away', () => {
+  const fakeLoadCharacterPosition = jest.fn()
+  fakeLoadCharacterPosition.mockReturnValue(Promise.resolve({ x: 100, y: 100 }))
+
+  const gameboard = gameboardFactory(
+    null,
+    fakeLoadCharacterPosition,
+    characterFactory
+  )
+
+  const userPosition = { x: 200, y: 200 }
+  const characterId = '123'
+
+  gameboard
+    .comparePositions(userPosition, characterId)
+    .then((comparePositions) => {
+      expect(comparePositions).toBe(false)
     })
 })
