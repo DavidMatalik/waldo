@@ -1,5 +1,5 @@
 import { app } from './firebaseApp.js'
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore/lite'
 
 const db = getFirestore(app)
 
@@ -14,4 +14,11 @@ const loadCharacters = async () => {
   return extractedCharacters
 }
 
-export { loadCharacters }
+const loadCharacterPosition = async (id) => {
+  const docRef = doc(db, 'positions', id)
+  const position = await getDoc(docRef)
+
+  return position.data()
+}
+
+export { loadCharacters, loadCharacterPosition }
