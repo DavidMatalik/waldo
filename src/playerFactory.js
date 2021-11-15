@@ -1,5 +1,6 @@
-export default function playerFactory(gameboard) {
+export default function playerFactory(gameboard, roundFactory) {
   let position = null
+  const round = roundFactory(Date.now())
 
   const selectPosition = (selection) => {
     position = selection
@@ -10,8 +11,15 @@ export default function playerFactory(gameboard) {
       position,
       characterId
     )
+
+    if (correctCharacter) round.calculateTime(Date.now())
+
     return correctCharacter
   }
 
-  return { selectPosition, selectCharacter }
+  const getRoundTime = () => {
+    return 5000
+  }
+
+  return { selectPosition, selectCharacter, getRoundTime }
 }
